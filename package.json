@@ -1,0 +1,8 @@
+{
+  "name": "whatnot-outreach",
+  "version": "1.0.0",
+  "description": "Whatnot Outreach Shipping Map",
+  "dependencies": {
+    "@netlify/blobs": "^8.1.0"
+  }
+}
