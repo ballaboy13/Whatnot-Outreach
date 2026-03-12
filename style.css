@@ -1,0 +1,286 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #0d0d0d;
+  color: #ffffff;
+  font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+  overflow-x: hidden;
+}
+
+#app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  background: #141414;
+  border-bottom: 1px solid #2a2a2a;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.header-left h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #d4a843;
+}
+
+.subtitle {
+  font-size: 0.8rem;
+  color: #888;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.upload-section {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#showName {
+  background: #1a1a1a;
+  border: 1px solid #333;
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  width: 240px;
+}
+
+#showName::placeholder {
+  color: #666;
+}
+
+.upload-btn {
+  background: #d4a843;
+  color: #0d0d0d;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.85rem;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+
+.upload-btn:hover {
+  background: #e6bc5a;
+}
+
+#showFilter {
+  background: #1a1a1a;
+  border: 1px solid #333;
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+}
+
+.status {
+  padding: 10px 24px;
+  font-size: 0.85rem;
+  text-align: center;
+  transition: all 0.3s;
+}
+
+.status.hidden {
+  display: none;
+}
+
+.status.loading {
+  background: #1a1a2e;
+  color: #7b8cde;
+}
+
+.status.success {
+  background: #1a2e1a;
+  color: #5cb85c;
+}
+
+.status.error {
+  background: #2e1a1a;
+  color: #d9534f;
+}
+
+.main-content {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+#map-container {
+  flex: 1;
+  position: relative;
+  background: #0d0d0d;
+}
+
+#map {
+  width: 100%;
+  height: calc(100vh - 70px);
+}
+
+.state {
+  fill: #1a1a1a;
+  stroke: #333;
+  stroke-width: 0.5px;
+  transition: fill 0.2s;
+}
+
+.state:hover {
+  fill: #252525;
+}
+
+.pin {
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.pin:hover {
+  transform: scale(1.3);
+}
+
+.pin-dot {
+  fill: #d4a843;
+  stroke: #fff;
+  stroke-width: 1px;
+}
+
+.pin-cluster {
+  fill: #d4a843;
+  stroke: #fff;
+  stroke-width: 1.5px;
+}
+
+.pin-label {
+  fill: #0d0d0d;
+  font-size: 10px;
+  font-weight: 700;
+  text-anchor: middle;
+  dominant-baseline: central;
+  pointer-events: none;
+}
+
+.tooltip {
+  position: absolute;
+  background: #1a1a1a;
+  border: 1px solid #d4a843;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  pointer-events: none;
+  z-index: 100;
+  max-width: 220px;
+}
+
+.tooltip.hidden {
+  display: none;
+}
+
+.tooltip h4 {
+  color: #d4a843;
+  margin-bottom: 4px;
+}
+
+.tooltip p {
+  color: #ccc;
+  font-size: 0.75rem;
+}
+
+#stats-panel {
+  width: 240px;
+  background: #141414;
+  border-left: 1px solid #2a2a2a;
+  padding: 20px;
+  overflow-y: auto;
+  max-height: calc(100vh - 70px);
+}
+
+#stats-panel h2 {
+  font-size: 1rem;
+  color: #d4a843;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.stat-card {
+  background: #1a1a1a;
+  border: 1px solid #2a2a2a;
+  border-radius: 8px;
+  padding: 14px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-value {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #d4a843;
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: 2px;
+}
+
+.top-cities h3 {
+  font-size: 0.8rem;
+  color: #d4a843;
+  margin-bottom: 8px;
+}
+
+.top-cities ol {
+  padding-left: 18px;
+}
+
+.top-cities li {
+  font-size: 0.8rem;
+  color: #ccc;
+  margin-bottom: 4px;
+}
+
+.top-cities li span {
+  color: #d4a843;
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    flex-direction: column;
+  }
+  #stats-panel {
+    width: 100%;
+    max-height: none;
+    border-left: none;
+    border-top: 1px solid #2a2a2a;
+  }
+  #map {
+    height: 50vh;
+  }
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
