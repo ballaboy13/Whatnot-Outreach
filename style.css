@@ -5,8 +5,8 @@
 }
 
 body {
-  background: #0d0d0d;
-  color: #ffffff;
+  background: #ffffff;
+  color: #333333;
   font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
   overflow-x: hidden;
 }
@@ -22,8 +22,8 @@ header {
   justify-content: space-between;
   align-items: center;
   padding: 16px 24px;
-  background: #141414;
-  border-bottom: 1px solid #2a2a2a;
+  background: #ffffff;
+  border-bottom: 2px solid #1a5276;
   flex-wrap: wrap;
   gap: 12px;
 }
@@ -32,14 +32,15 @@ header {
   font-size: 1.5rem;
   font-weight: 700;
   letter-spacing: 2px;
-  color: #d4a843;
+  color: #1a5276;
 }
 
 .subtitle {
   font-size: 0.8rem;
-  color: #888;
+  color: #e67e22;
   letter-spacing: 1px;
   text-transform: uppercase;
+  font-weight: 600;
 }
 
 .header-right {
@@ -55,23 +56,9 @@ header {
   gap: 8px;
 }
 
-#showName {
-  background: #1a1a1a;
-  border: 1px solid #333;
-  color: #fff;
-  padding: 8px 12px;
-  border-radius: 6px;
-  font-size: 0.85rem;
-  width: 240px;
-}
-
-#showName::placeholder {
-  color: #666;
-}
-
 .upload-btn {
-  background: #d4a843;
-  color: #0d0d0d;
+  background: #e67e22;
+  color: #ffffff;
   padding: 8px 16px;
   border-radius: 6px;
   cursor: pointer;
@@ -82,13 +69,13 @@ header {
 }
 
 .upload-btn:hover {
-  background: #e6bc5a;
+  background: #d35400;
 }
 
 #showFilter {
-  background: #1a1a1a;
-  border: 1px solid #333;
-  color: #fff;
+  background: #f8f9fa;
+  border: 1px solid #1a5276;
+  color: #333;
   padding: 8px 12px;
   border-radius: 6px;
   font-size: 0.85rem;
@@ -106,18 +93,18 @@ header {
 }
 
 .status.loading {
-  background: #1a1a2e;
-  color: #7b8cde;
+  background: #eaf2f8;
+  color: #1a5276;
 }
 
 .status.success {
-  background: #1a2e1a;
-  color: #5cb85c;
+  background: #eafaf1;
+  color: #27ae60;
 }
 
 .status.error {
-  background: #2e1a1a;
-  color: #d9534f;
+  background: #fdedec;
+  color: #e74c3c;
 }
 
 .main-content {
@@ -129,7 +116,7 @@ header {
 #map-container {
   flex: 1;
   position: relative;
-  background: #0d0d0d;
+  background: #f8f9fa;
 }
 
 #map {
@@ -138,14 +125,14 @@ header {
 }
 
 .state {
-  fill: #1a1a1a;
-  stroke: #333;
+  fill: #eaf2f8;
+  stroke: #1a5276;
   stroke-width: 0.5px;
   transition: fill 0.2s;
 }
 
 .state:hover {
-  fill: #252525;
+  fill: #d4e6f1;
 }
 
 .pin {
@@ -158,19 +145,19 @@ header {
 }
 
 .pin-dot {
-  fill: #d4a843;
-  stroke: #fff;
+  fill: #e67e22;
+  stroke: #1a5276;
   stroke-width: 1px;
 }
 
 .pin-cluster {
-  fill: #d4a843;
-  stroke: #fff;
+  fill: #e67e22;
+  stroke: #1a5276;
   stroke-width: 1.5px;
 }
 
 .pin-label {
-  fill: #0d0d0d;
+  fill: #ffffff;
   font-size: 10px;
   font-weight: 700;
   text-anchor: middle;
@@ -180,14 +167,15 @@ header {
 
 .tooltip {
   position: absolute;
-  background: #1a1a1a;
-  border: 1px solid #d4a843;
+  background: #ffffff;
+  border: 2px solid #1a5276;
   padding: 8px 12px;
   border-radius: 6px;
   font-size: 0.8rem;
   pointer-events: none;
   z-index: 100;
   max-width: 220px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
 }
 
 .tooltip.hidden {
@@ -195,19 +183,19 @@ header {
 }
 
 .tooltip h4 {
-  color: #d4a843;
+  color: #1a5276;
   margin-bottom: 4px;
 }
 
 .tooltip p {
-  color: #ccc;
+  color: #555;
   font-size: 0.75rem;
 }
 
 #stats-panel {
   width: 240px;
-  background: #141414;
-  border-left: 1px solid #2a2a2a;
+  background: #ffffff;
+  border-left: 2px solid #1a5276;
   padding: 20px;
   overflow-y: auto;
   max-height: calc(100vh - 70px);
@@ -215,15 +203,15 @@ header {
 
 #stats-panel h2 {
   font-size: 1rem;
-  color: #d4a843;
+  color: #1a5276;
   letter-spacing: 1px;
   text-transform: uppercase;
   margin-bottom: 16px;
 }
 
 .stat-card {
-  background: #1a1a1a;
-  border: 1px solid #2a2a2a;
+  background: #f8f9fa;
+  border: 1px solid #d4e6f1;
   border-radius: 8px;
   padding: 14px;
   margin-bottom: 10px;
@@ -234,12 +222,12 @@ header {
 .stat-value {
   font-size: 1.8rem;
   font-weight: 700;
-  color: #d4a843;
+  color: #e67e22;
 }
 
 .stat-label {
   font-size: 0.75rem;
-  color: #888;
+  color: #777;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   margin-top: 2px;
@@ -247,7 +235,7 @@ header {
 
 .top-cities h3 {
   font-size: 0.8rem;
-  color: #d4a843;
+  color: #1a5276;
   margin-bottom: 8px;
 }
 
@@ -257,12 +245,12 @@ header {
 
 .top-cities li {
   font-size: 0.8rem;
-  color: #ccc;
+  color: #555;
   margin-bottom: 4px;
 }
 
 .top-cities li span {
-  color: #d4a843;
+  color: #e67e22;
   font-weight: 600;
 }
 
@@ -270,15 +258,18 @@ header {
   .main-content {
     flex-direction: column;
   }
+
   #stats-panel {
     width: 100%;
     max-height: none;
     border-left: none;
-    border-top: 1px solid #2a2a2a;
+    border-top: 2px solid #1a5276;
   }
+
   #map {
     height: 50vh;
   }
+
   header {
     flex-direction: column;
     align-items: flex-start;
