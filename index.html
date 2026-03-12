@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Whatnot Outreach Map</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="https://d3js.org/topojson.v3.min.js"></script>
+</head>
+<body>
+  <div id="app">
+    <header>
+      <div class="header-left">
+        <h1>WHATNOT OUTREACH</h1>
+        <p class="subtitle">Shipping Destination Tracker</p>
+      </div>
+      <div class="header-right">
+        <div class="upload-section">
+          <input type="text" id="showName" placeholder="Show name (e.g. March 8 Singles Show)">
+          <label for="pdfUpload" class="upload-btn">Upload Label PDF</label>
+          <input type="file" id="pdfUpload" accept="application/pdf" hidden>
+        </div>
+        <div class="filter-section">
+          <select id="showFilter">
+            <option value="all">All Shows</option>
+          </select>
+        </div>
+      </div>
+    </header>
+    <div id="status" class="status hidden"></div>
+    <div class="main-content">
+      <div id="map-container">
+        <svg id="map"></svg>
+        <div id="tooltip" class="tooltip hidden"></div>
+      </div>
+      <aside id="stats-panel">
+        <h2>Stats</h2>
+        <div class="stat-card">
+          <span class="stat-value" id="totalShipments">0</span>
+          <span class="stat-label">Total Shipments</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-value" id="totalCities">0</span>
+          <span class="stat-label">Unique Cities</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-value" id="totalStates">0</span>
+          <span class="stat-label">Unique States</span>
+        </div>
+        <div class="stat-card top-cities">
+          <h3>Top Destinations</h3>
+          <ol id="topCities"></ol>
+        </div>
+      </aside>
+    </div>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
