@@ -33,15 +33,20 @@ exports.handler = async (event) => {
   if (event.httpMethod === "POST") {
     try {
       const body = JSON.parse(event.body);
-      const { pdfBase64, showName } = body;
+      const { pdfBase64 } = body;
 
-      if (!pdfBase64 || !showName) {
+      if (!pdfBase64) {
         return {
           statusCode: 400,
           headers,
-          body: JSON.stringify({ error: "Missing pdfBase64 or showName" }),
+          body: JSON.stringify({ error: "Missing pdfBase64" }),
         };
       }
+
+      // Auto-generate show name from current date
+      const now = new Date();
+      const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+      const showName = months[now.getMonth()] + " " + now.getDate() + " " + now.getFullYear();
 
       const CLAUDE_API_KEY = process.env.CLAUDE_API_KEY;
       if (!CLAUDE_API_KEY) {
@@ -52,37 +57,40 @@ exports.handler = async (event) => {
         };
       }
 
-      const claudeResponse = await fetch("https://api.anthropic.com/v1/messages", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-api-key": CLAUDE_API_KEY,
-          "anthropic-version": "2023-06-01",
-        },
-        body: JSON.stringify({
-          model: "claude-sonnet-4-20250514",
-          max_tokens: 4096,
-          messages: [
-            {
-              role: "user",
-              content: [
-                {
-                  type: "document",
-                  source: {
-                    type: "base64",
-                    media_type: "application/pdf",
-                    data: pdfBase64,
+      const claudeResponse = await fetch(
+        "https://api.anthropic.com/v1/messages",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "x-api-key": CLAUDE_API_KEY,
+            "anthropic-version": "2023-06-01",
+          },
+          body: JSON.stringify({
+            model: "claude-sonnet-4-20250514",
+            max_tokens: 4096,
+            messages: [
+              {
+                role: "user",
+                content: [
+                  {
+                    type: "document",
+                    source: {
+                      type: "base64",
+                      media_type: "application/pdf",
+                      data: pdfBase64,
+                    },
                   },
-                },
-                {
-                  type: "text",
-                  text: "Extract every recipient shipping address from every label on every page of this PDF. For each label, return the recipient city and state (2-letter abbreviation). Return ONLY a JSON array of objects like [{\"city\": \"Los Angeles\", \"state\": \"CA\"}, ...]. If you cannot find any addresses, return an empty array []. Return ONLY valid JSON, no other text.",
-                },
-              ],
-            },
-          ],
-        }),
-      });
+                  {
+                    type: "text",
+                    text: 'Extract every recipient shipping address from every label on every page of this PDF. For each label, return the recipient city and state (2-letter abbreviation). Return ONLY a JSON array of objects like [{"city": "Los Angeles", "state": "CA"}, ...]. If you cannot find any addresses, return an empty array []. Return ONLY valid JSON, no other text.',
+                  },
+                ],
+              },
+            ],
+          }),
+        }
+      );
 
       if (!claudeResponse.ok) {
         const errText = await claudeResponse.text();
