@@ -1,61 +1,127 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Whatnot Outreach Map</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://d3js.org/d3.v7.min.js"></script>
-    <script src="https://d3js.org/topojson.v3.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-</head>
+    <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Whatnot Outreach Map</title>
+        <link rel="stylesheet" href="style.css">
+        <script src="https://d3js.org/d3.v7.min.js"></script>
+        <script src="https://d3js.org/topojson.v3.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    </head>
 <body>
-    <div id="app">
-        <header>
-            <div class="header-left">
-                <h1>WHATNOT OUTREACH</h1>
-                <p class="subtitle">Shipping Destination Tracker</p>
-            </div>
-            <div class="header-right">
-                <div class="upload-section">
-                    <label for="pdfUpload" class="upload-btn">Upload Label PDF</label>
-                    <input type="file" id="pdfUpload" accept="application/pdf" hidden>
-                </div>
-                <div class="filter-section">
-                    <select id="showFilter">
-                        <option value="all">All Shows</option>
-                    </select>
-                </div>
-            </div>
-        </header>
-        <div id="status" class="status hidden"></div>
-        <div class="main-content">
-            <div id="map-container">
-                <svg id="map"></svg>
-                <div id="tooltip" class="tooltip hidden"></div>
-            </div>
-            <aside id="stats-panel">
-                <h2>Stats</h2>
-                <div class="stat-card">
-                    <span class="stat-value" id="totalShipments">0</span>
-                    <span class="stat-label">Total Shipments</span>
-                </div>
-                <div class="stat-card">
-                    <span class="stat-value" id="totalCities">0</span>
-                    <span class="stat-label">Unique Cities</span>
-                </div>
-                <div class="stat-card">
-                    <span class="stat-value" id="totalStates">0</span>
-                    <span class="stat-label">Unique States</span>
-                </div>
-                <div class="stat-card top-cities">
-                    <h3>Top Destinations</h3>
-                    <ol id="topCities"></ol>
-                </div>
-            </aside>
-        </div>
-    </div>
-    <canvas id="pdfCanvas" style="display:none"></canvas>
-    <script src="app.js"></script>
+        <div id="app">
+                    <header role="banner">
+                                    <div class="header-left">
+                                                        <h1>WHATNOT OUTREACH</h1>
+                                                    <p class="subtitle">Shipping Destination Tracker</p>p>
+                                    </div>div>
+                                <div class="header-right">
+                                                <div class="upload-section">
+                                                                    <label for="pdfUpload" class="upload-btn" role="button" tabindex="0" aria-label="Upload shipping label PDF">Upload Label PDF</label>label>
+                                                                    <input type="file" id="pdfUpload" accept="application/pdf" hidden>
+                                                </div>div>
+                                                <div class="filter-section">
+                                                                    <select id="showFilter" aria-label="Filter by show date">
+                                                                                            <option value="all">All Shows</option>option>
+                                                                    </select>select>
+                                                </div>div>
+                                                <button id="exportCsvBtn" class="export-btn" aria-label="Export data as CSV">Export CSV</button>button>
+                                                <button id="heatToggleBtn" class="heat-toggle-btn" aria-label="Toggle heat map view">Heat Map</button>button>
+                                </div>div>
+                    </header>header>
+        
+                <div id="uploadProgress" class="upload-progress hidden" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                            <div class="progress-bar-track">
+                                            <div class="progress-bar-fill" id="progressFill"></div>div>
+                            </div>div>
+                            <span class="progress-text" id="progressText">Processing...</span>span>
+                </div>div>
+        
+                <div id="status" class="status hidden" role="alert" aria-live="polite"></div>div>
+        
+                <div class="main-content">
+                            <div id="map-container" role="img" aria-label="Map showing shipping destinations across the United States">
+                                            <svg id="map"></svg>svg>
+                                            <div id="tooltip" class="tooltip hidden" role="tooltip"></div>div>
+                                            <div id="zoom-controls" class="zoom-controls" aria-label="Map zoom controls">
+                                                                <button id="zoomIn" class="zoom-btn" aria-label="Zoom in" title="Zoom in">+</button>button>
+                                                                <button id="zoomOut" class="zoom-btn" aria-label="Zoom out" title="Zoom out">&minus;</button>button>
+                                                                <button id="zoomReset" class="zoom-btn zoom-reset" aria-label="Reset zoom" title="Reset view">&#8634;</button>button>
+                                            </div>div>
+                                            <div id="emptyState" class="empty-state hidden">
+                                                                <div class="empty-state-icon">&#128230;</div>div>
+                                                                <h2>No Shipping Data Yet</h2>
+                                                                <p>Upload your first Whatnot shipping label PDF to see where your packages are going!</p>
+                                                                <label for="pdfUpload" class="upload-btn" role="button" tabindex="0">Upload Label PDF</label>label>
+                                            </div>div>
+                            </div>div>
+                            <aside id="stats-panel" aria-label="Shipping statistics">
+                                            <h2>Stats</h2>
+                                            <div class="stat-card" tabindex="0" aria-label="Total shipments">
+                                                                <span class="stat-value" id="totalShipments">0</span>span>
+                                                                <span class="stat-label">Total Shipments</span>span>
+                                            </div>div>
+                                            <div class="stat-card" tabindex="0" aria-label="Unique cities">
+                                                                <span class="stat-value" id="totalCities">0</span>span>
+                                                                <span class="stat-label">Unique Cities</span>span>
+                                            </div>div>
+                                            <div class="stat-card" tabindex="0" aria-label="Unique states">
+                                                                <span class="stat-value" id="totalStates">0</span>span>
+                                                                <span class="stat-label">Unique States</span>span>
+                                            </div>div>
+                                            <div class="stat-card" tabindex="0" aria-label="States with no shipments">
+                                                                <span class="stat-value" id="missingStates">0</span>span>
+                                                                <span class="stat-label">Untapped States</span>span>
+                                            </div>div>
+                                            <div class="stat-card top-cities">
+                                                                <h3>Top Destinations</h3>
+                                                                <ol id="topCities" aria-label="Top 10 shipping destinations"></ol>ol>
+                                                                <button id="showAllBtn" class="show-all-btn" aria-label="Show all destinations">Show All</button>button>
+                                            </div>div>
+                                            <div id="stateDetail" class="state-detail hidden">
+                                                                <h3 id="stateDetailTitle"></h3>
+                                                                <div class="state-detail-stats">
+                                                                                        <span id="stateShipments">0</span>span> shipments &middot; <span id="stateCities">0</span>span> cities
+                                                                </div>div>
+                                                                <ol id="stateCityList" aria-label="Cities in selected state"></ol>ol>
+                                                                <button id="clearStateFilter" class="clear-state-btn">Clear State Filter</button>button>
+                                            </div>div>
+                            </aside>aside>
+                </div>div>
+        </div>div>
+
+    <!-- All Destinations Modal -->
+    <div id="allDestModal" class="modal hidden" role="dialog" aria-labelledby="modalTitle" aria-modal="true">
+            <div class="modal-content">
+                        <div class="modal-header">
+                                        <h2 id="modalTitle">All Destinations</h2>
+                                        <div class="modal-search">
+                                                            <input type="text" id="destSearch" placeholder="Search cities..." aria-label="Search destinations">
+                                        </div>div>
+                                        <button id="closeModal" class="modal-close" aria-label="Close modal">&times;</button>button>
+                        </div>div>
+                        <div class="modal-body">
+                                        <table id="destTable" aria-label="All shipping destinations">
+                                                            <thead>
+                                                                                        <tr>
+                                                                                                                        <th tabindex="0" data-sort="rank">#</th>th>
+                                                                                                                        <th tabindex="0" data-sort="city">City</th>th>
+                                                                                                                        <th tabindex="0" data-sort="state">State</th>th>
+                                                                                                                        <th tabindex="0" data-sort="count">Shipments</th>th>
+                                                                                            </tr>
+                                                            </thead>
+                                                                <tbody id="destTableBody"></tbody>tbody>
+                                        </table>table>
+                        </div>div>
+            </div>div>
+    </div>div>
+
+        <canvas id="pdfCanvas" style="display:none"></canvas>canvas>
+        <script src="app.js"></script>
 </body>
-</html>
+</html>html>
+                                                                                        </tr>
+                                                            </thead></p></h2></h1>
+</body></title>
+    </head>
